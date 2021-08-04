@@ -1,0 +1,5 @@
+# String test
+
+strings=[ 'qwe','asd','zxc','asd']
+strings.remove("asd")
+print(strings)

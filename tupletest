@@ -1,0 +1,10 @@
+# tuple test
+
+
+shoes = ("Spizikes","Air Force 1","Curry 2","Melo 5")
+
+templist=list(shoes)
+
+templist.append("Whites")
+
+print(tuple(templist))

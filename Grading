@@ -1,0 +1,49 @@
+def capitalise(fullname):
+# This function initial letter of each string in a list separated by a space
+
+  newname='';
+  for name in fullname.split():
+    newname=newname+' '+name[0].upper()+name[1:];
+
+  return(newname);
+
+############################################
+
+
+def gradescore(name):
+
+  if name.upper() != 'STOP':
+    test=1;
+
+    while test:
+      try:
+        score = int(input("Score: "));
+        test=0
+      except Exception:
+        print("You must enter a valid score");
+
+    pointspossible=150;
+    percentage=round(float(score)/float(pointspossible)*100,2);
+
+    if percentage<60:
+      grade='F';
+    elif percentage<70:
+      grade='D';
+    elif percentage<80:
+      grade='C';
+    elif percentage<90:
+      grade='B';
+    else:
+      grade='A';
+
+    print('Student: {}, Percentage: {}%, Grade {}'.format(capitalise(name),percentage,grade));
+
+##############################################
+#
+# Main code area.
+#
+
+studentname="";
+while  studentname.upper() != 'STOP':
+  studentname=input("Student Name: ");
+  gradescore(studentname);

@@ -1,0 +1,90 @@
+# Hangman
+import os
+
+# Enterletter function is to allow player to input a guess, however a check is done to ensure that it is in the list
+# of the letters in the remaining list.
+
+def enterletter():
+  test=1
+  while test:
+      guess=input("Please enter a letter: ")
+      guess.lower()
+      if guess not in remaining:
+        print("You have either guessed this already or it is not a letter in the alphabet\nPlease enter a guess from the unused letters...you have not lost a life\n")
+        print("{}\n".format(remaining))
+      else:
+        test=0
+
+  return guess
+
+
+# main body of the programme
+
+# Initialise variables
+
+remaining="abcdefghijklmnopqrstuvwxyz"  #Initialise to all letters of alphabet, they will be removed as guesses are made
+lives=5                                 #You can have this number of incorrect guesses. Player 2 loses at 0
+word=''                                 #The word input by player 1 that player 2 has to guess
+secretword=''                           #This is used to reveal the correctly guessed found letters
+guessnum=1                              #Just a counter to show how many guesses have been made
+guess=""                                #The guess for this turn that player2 has made
+blank=''                                #General use variable to represent a null string
+
+
+print("Welcome to Hangman.  You have 5 lives to guess all the letters in the secret word.")
+print("If you manage to guess all the letters before you run out of your {} lives you win!".format(lives))
+print("")
+word=input("Player 1, please enter the secret word: ")
+
+secretword='_'*len(word)                #create the secretword which is made up of '_' and is the same length as word
+os.system('clear')
+print("Player 2, you are ready to play. Don't forget you have {} lives!".format(lives))
+print("The secret word has {} letters: {}".format(len(word),secretword))
+
+word=word.lower()
+
+while lives > 0:
+  guess=enterletter()
+  tempword='_____'
+
+# remove the letter from the remaining alphabet
+  remaining=remaining.replace(guess,'')
+
+  if guess in word:
+    print("well done, you have found a letter!")
+    guessnum+=1
+
+# Take the found letter and firstly remove any of them from the original word so that they cannot be 'found again'.
+# Then exposes the letters in the secretword for player 2 to see.
+
+# Using a temporary word to act as a mask so we can add the letters to secretword - we only add found letters
+# First make the tempword and put the letter(s) into the positions they hold in the tempword
+# ...then take the tempword and where there is '_' in the secretword (guessed letters) make them the same as tempword
+# whilst keeping the already found letters untouched.
+
+    tempword=[guess if x==guess else '_' for x in word]
+
+    secretword=[x for x in secretword]
+    for x in range(len(secretword)):
+      if (secretword[x]=="_" and tempword[x] !='_'):
+        secretword[x]=tempword[x]
+
+# the operation above makes the strings become a list type.  The command below turns them back into type string for printing
+
+    secretword=blank.join(secretword)
+
+    print(secretword)
+
+    if secretword==word:
+      print("Congratulations you have guessed the word!  You win with {} lives left\n".format(lives))
+      lives=0
+
+  elif lives==1:
+    lives-=1
+    print("Unfortunately you have not found the word and have no lives left.")
+    print("Player1 wins the game!\nThe word was: {}\n".format(word))
+
+  elif lives>0:
+    lives-=1
+    print("You have not found a letter and have {} lives left.\nPlease choose from the remaining letters: {}".format(lives,remaining))
+    guessnum+=1
