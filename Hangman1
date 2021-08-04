@@ -47,15 +47,14 @@ while lives > 0:
   guess=enterletter()
   tempword='_____'
 
-# remove the letter from the remaining alphabet
+# remove the letter from the remaining alphabet to a) record the letter that has been guessed and preventing a guess of the same letter.
   remaining=remaining.replace(guess,'')
 
   if guess in word:
     print("well done, you have found a letter!")
     guessnum+=1
 
-# Take the found letter and firstly remove any of them from the original word so that they cannot be 'found again'.
-# Then exposes the letters in the secretword for player 2 to see.
+# Then expose the letters in the secretword for player 2 to see.
 
 # Using a temporary word to act as a mask so we can add the letters to secretword - we only add found letters
 # First make the tempword and put the letter(s) into the positions they hold in the tempword
@@ -64,12 +63,14 @@ while lives > 0:
 
     tempword=[guess if x==guess else '_' for x in word]
 
+#H ave to convert the string into a list for the for loop to work - the command immediately below does the conversion
     secretword=[x for x in secretword]
+    
     for x in range(len(secretword)):
       if (secretword[x]=="_" and tempword[x] !='_'):
         secretword[x]=tempword[x]
 
-# the operation above makes the strings become a list type.  The command below turns them back into type string for printing
+# the operation above makes the string become a type list.  The command below turns them back into type string for printing
 
     secretword=blank.join(secretword)
 
